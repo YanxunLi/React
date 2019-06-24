@@ -22,40 +22,37 @@ class DishDetail extends Component {
     renderComments(comments) {
         const commentList = comments.map((comment) => {
             return (
-                <div key={comment.id}>
+                <li key={comment.id}>
                     <p>{comment.comment}</p>
-                    <ul class="list-inline">
-                        <li class="list-inline-item" >-- </li>
-                        <li class="list-inline-item">{comment.author}</li>
-                        <li class="list-inline-item" > , </li>
-                        <li class="list-inline-item">{comment.date}</li>
-                    </ul>
+                    <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                     <p></p>
-                </div>
+                </li>
             );
         });
 
         return (
-            <>
+            <div>
                 <h4>Comments</h4>
                 <ul class="list-unstyled">
                     {commentList}
                 </ul>
-            </>
+            </div>
         );
     }
 
     render() {
-        if (this.props.selectedDish != null) {
+        if (this.props.dish != null) {
             return (
-                <>
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.props.selectedDish)}
+                <div class="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderDish(this.props.dish)}
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
                     </div>
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderComments(this.props.selectedDish.comments)}
-                    </div>
-                </>
+                </div>
             );
         }
         else {
